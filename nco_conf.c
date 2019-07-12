@@ -59,3 +59,15 @@ int nco_counter_send_conf(const char *filename,
 	close(nco);
 	return 0;
 }
+
+int nco_counter_set_max_accum(const char *filename, const uint64_t max)
+{
+	int nco = open(filename, O_RDWR);
+	if (nco < 0) {
+		printf("erreur d'ouverture de %s\n", filename);
+		return nco;
+	}
+	ioctl(nco, NCO_COUNTER_SET(REG_MAX_ACCUM), &max);
+	close(nco);
+	return EXIT_SUCCESS;
+}
