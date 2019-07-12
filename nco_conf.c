@@ -37,7 +37,8 @@ int nco_counter_send_conf(const char *filename,
 	long double real_freq = freqHz_ref/(powl(2,accum_size)/(long double)incr);
 	printf("%Lf\n", real_freq);
 
-	unsigned int ctrl_reg = 0;
+	uint64_t ctrl_reg = 0;
+	uint64_t offset_reg = offset;
 	if (pinc_sw == 1) {
 		ctrl_reg = ctrl_reg | CTRL_PINC_SW;
 	}
@@ -52,7 +53,7 @@ int nco_counter_send_conf(const char *filename,
 	}
 	ioctl(nco, NCO_COUNTER_SET(REG_CTRL), &ctrl_reg);
 	ioctl(nco, NCO_COUNTER_SET(REG_PINC), &incr);
-	ioctl(nco, NCO_COUNTER_SET(REG_POFF), &offset);
+	ioctl(nco, NCO_COUNTER_SET(REG_POFF), &offset_reg);
 	ioctl(nco, NCO_COUNTER_GET(REG_PINC), &incr);
 	printf("incr : %Ld\n", incr);
 	close(nco);
