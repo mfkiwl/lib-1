@@ -27,7 +27,7 @@ int switch_send_conf(char *filename, int input)
 		printf("erreur d'ouverture de %s\n", filename);
 		return fd_sw;
 	}
-	printf("configuration switch\n");
+
 	ioctl(fd_sw, SWITCH_SELECT_INPUT, &input);
 	close(fd_sw);
 	return 0;

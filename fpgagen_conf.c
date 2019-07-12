@@ -30,7 +30,7 @@ int fpgagen_send_conf(char *filename, int reg, int value)
 		printf("erreur d'ouverture de %s\n", filename);
 		return fpgagen;
 	}
-	printf("configuration fpgagen\n");
+
 	ioctl(fpgagen, FPGAGEN_SET_REGISTER(reg), &value);
 	close(fpgagen);
 	return 0;
@@ -43,7 +43,7 @@ int fpgagen_recv_conf(char *filename, int reg, int *value)
 		printf("erreur d'ouverture de %s\n", filename);
 		return fpgagen;
 	}
-	printf("configuration fpgagen\n");
+
 	ioctl(fpgagen, FPGAGEN_GET_REGISTER(reg), value);
 	close(fpgagen);
 	return 0;
