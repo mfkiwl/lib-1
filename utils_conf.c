@@ -19,10 +19,11 @@
 /* memory management */
 #include <sys/mman.h>
 #include <fpgagen_core/fpgagen_config.h>
+#include <utils_conf.h>
 
 #define SHIFT_VAL_REG (1 << 2)
 
-int shift_set(char *filename, int shift)
+int shifter_set(char *filename, int shift)
 {
 	int fd_sw = open(filename, O_RDWR);
 	if (fd_sw < 0) {
@@ -35,7 +36,7 @@ int shift_set(char *filename, int shift)
 	return 0;
 }
 
-int shift_get(char *filename, int *shift)
+int shifter_get(char *filename, int *shift)
 {
 	int fd_sw = open(filename, O_RDWR);
 	if (fd_sw < 0) {
