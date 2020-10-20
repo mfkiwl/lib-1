@@ -106,6 +106,12 @@ def redpitaya_converters_12_ext_ref_enable(filename, pll_en_val):
 	pll_en = ctypes.c_int8(pll_en_val)
 	lib.redpitaya_converters_12_ext_ref_enable(file, pll_en)
 
+def redpitaya_converters_12_get_ref_status(filename):
+	file = ctypes.create_string_buffer(str.encode(filename))
+	val = ctypes.c_int8()
+	ret_val = lib.redpitaya_converters_12_get_ref_status(file, byref(val))
+	return (ret_val, val.value)
+
 def switch_send_conf(filename, input):
 	file = ctypes.create_string_buffer(str.encode(filename))
 	lib.switch_send_conf(file, input)

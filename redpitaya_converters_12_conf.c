@@ -57,29 +57,24 @@ int redpitaya_converters_12_ext_ref_enable(const char *filename, int8_t pll_en_v
         }
 
         /* enable external reference clock*/
-        if (ioctl(fd, REDPITAYA_CONVERTERS_12_SET(REG_REDPITAYA_CONVERTERS_12_PLL_EN), &pll_en_val) < 0)
-                goto fd_close;
-
+        ioctl(fd, REDPITAYA_CONVERTERS_12_SET(REG_REDPITAYA_CONVERTERS_12_PLL_EN), &pll_en_val);
         retval = EXIT_SUCCESS;
-fd_close:
         close(fd);
         return retval;
 }
 
-int __redpitaya_converters_12_set(const char *filename, unsigned long reg, unsigned long val)
+int redpitaya_converters_12_get_ref_status(const char *filename, int8_t *pll_ref_status)
 {
-	int retval = EXIT_FAILURE;
-	int fd = open(filename, O_RDWR);
-	if (fd < 0) {
-		printf("erreur d'ouverture de %s\n", filename);
-		return EXIT_FAILURE;
-	}
+        int retval = EXIT_SUCCESS;
+        int fd = open(filename, O_RDWR);
+        if (fd < 0) {
+                printf("erreur d'ouverture de %s\n", filename);
+                return EXIT_FAILURE;
+        }
 
-	if (ioctl(fd, REDPITAYA_CONVERTERS_12_SET(reg), &val) < 0)
-		goto fd_close;
-
-	retval = EXIT_SUCCESS;
-fd_close:
-	close(fd);
-	return retval;
+        retval = EXIT_SUCCESS;
+        if (ioctl(fd, REDPITAYA_CONVERTERS_12_GET(REG_REDPITAYA_CONVERTERS_12_PLL_OK), pll_ref_status) < 0)
+	        retval = EXIT_FAILURE;
+        close(fd);
+        return retval;
 }
