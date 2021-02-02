@@ -1,4 +1,3 @@
-import time
 import ctypes
 
 lib = ctypes.CDLL('/usr/lib/liboscimp_fpga.so')
@@ -14,7 +13,7 @@ def add_constMulti_set_offset(basename, nb_adder, offset):
 def add_const_get_offset(filename):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	my_val = ctypes.c_longlong()
-	ret_val = lib.add_const_get_offset(filename, byref(my_val))
+	ret_val = lib.add_const_get_offset(filename, ctypes.byref(my_val))
 	return (ret_val, my_val.value)
 
 (CHANA, CHANB) = (0, 1)
@@ -112,7 +111,7 @@ def redpitaya_converters_12_ext_ref_enable(filename, pll_en_val):
 def redpitaya_converters_12_get_ref_status(filename):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	val = ctypes.c_int8()
-	ret_val = lib.redpitaya_converters_12_get_ref_status(filename, byref(val))
+	ret_val = lib.redpitaya_converters_12_get_ref_status(filename, ctypes.byref(val))
 	return (ret_val, val.value)
 
 def switch_send_conf(filename, input):
