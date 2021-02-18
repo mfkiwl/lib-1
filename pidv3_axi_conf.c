@@ -73,15 +73,44 @@ fd_close:
 	return retval;
 }
 
+int32_t __pidv3_axi_get(const char *filename, const int32_t reg, int32_t *val)
+{
+	int retval = EXIT_FAILURE;
+	int fd = open(filename, O_RDWR);
+	if (fd < 0) {
+		printf("erreur d'ouverture de %s\n", filename);
+		return EXIT_FAILURE;
+	}
+
+	if (ioctl(fd, PIDV3_AXI_SET(reg), val) < 0)
+		goto fd_close;
+
+	retval = EXIT_SUCCESS;
+fd_close:
+	close(fd);
+	return retval;
+}
+
 int pidv3_axi_set_kchan(const char *filename, const enum k_chan_t chan, const int32_t val)
 {
 	int reg = (chan == KP) ? REG_PIDV3_AXI_KP : ((chan == KI) ? REG_PIDV3_AXI_KI:REG_PIDV3_AXI_KD);
 	return __pidv3_axi_set(filename, reg, val);
 }
 
+int pidv3_axi_get_kchan(const char *filename, const enum k_chan_t chan, int32_t *val)
+{
+	int reg = (chan == KP) ? REG_PIDV3_AXI_KP : ((chan == KI) ? REG_PIDV3_AXI_KI:REG_PIDV3_AXI_KD);
+	return __pidv3_axi_get(filename, reg, val);
+}
+
 int pidv3_axi_set_setpoint(const char *filename, const int32_t val)
 {
 	return __pidv3_axi_set(filename, REG_PIDV3_AXI_SETPOINT, val);
+}
+
+int pidv3_axi_get_setpoint(const char *filename, int32_t *val)
+{
+	return __pidv3_axi_get(filename, REG_PIDV3_AXI_SETPOINT, val);
 }
 
 int pidv3_axi_set_int_rst(const char *filename, const int8_t val)
@@ -92,6 +121,14 @@ int pidv3_axi_set_int_rst(const char *filename, const int8_t val)
 int pidv3_axi_set_sign(const char *filename, const int8_t val)
 {
 	return __pidv3_axi_set(filename, REG_PIDV3_AXI_SIGN, val);
+}
+
+int pidv3_get_axi_sign(const char *filename, int8_t *val)
+{
+	int32_t v;
+	int ret = __pidv3_axi_get(filename, REG_PIDV3_AXI_SIGN, &v);
+	*val = v;
+	return ret;
 }
 
 int pidv3_axi_set_sw_hw(const char *filename, const enum input_set_t input)

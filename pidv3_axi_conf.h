@@ -59,10 +59,21 @@ int pidv3_axi_full_conf(const char *filename,
  */
 int pidv3_axi_set_kchan(const char *filename, const enum k_chan_t chan, const int32_t val);
 
+/* read chan value:
+ * chan: must be KP, KI or KD
+ * val: current value
+ */
+int pidv3_axi_get_kchan(const char *filename, const enum k_chan_t chan, int32_t *val);
+
 /* send setpoint value:
  * value: value to send
  */
 int pidv3_axi_set_setpoint(const char *filename, const int32_t val);
+
+/* read setpoint value:
+ * return current setpoint value
+ */
+int iidv3_axi_get_setpoint(const char *filename, int32_t *val);
 
 /* send int_rst:
  * value: value to send
@@ -72,7 +83,12 @@ int pidv3_axi_set_int_rst(const char *filename, const int8_t val);
 /* send sign
  * value: value to send
  */
-int pidv3_axi_sign(const char *filename, const int8_t val);
+int pidv3_set_axi_sign(const char *filename, const int8_t val);
+
+/* read sign
+ * current sign value
+ */
+int pidv3_get_axi_sign(const char *filename, int8_t *val);
 
 /* configure if signal is from AXI or from input
  * input: configuration
