@@ -82,7 +82,7 @@ int32_t __pidv3_axi_get(const char *filename, const int32_t reg, int32_t *val)
 		return EXIT_FAILURE;
 	}
 
-	if (ioctl(fd, PIDV3_AXI_SET(reg), val) < 0)
+	if (ioctl(fd, PIDV3_AXI_GET(reg), val) < 0)
 		goto fd_close;
 
 	retval = EXIT_SUCCESS;
