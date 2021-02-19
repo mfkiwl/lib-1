@@ -89,7 +89,7 @@ def pidv3_axi_get(filename, chan):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	my_val = ctypes.c_int32()
 	ret_val = lib.pidv3_axi_get_kchan(filename, chan, ctypes.by_ref(my_val))
-    return (ret_val, my_val)
+	return (ret_val, my_val)
 
 def pidv3_axi_set_int_rst(filename, rst):
 	filename = ctypes.create_string_buffer(str.encode(filename))
@@ -105,7 +105,7 @@ def pidv3_axi_get_sign(filename):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	my_val = ctypes.c_int8()
 	ret_val = lib.pidv3_get_axi_sign(filename, ctypes.by_ref(my_val))
-    return (ret_val, my_val)
+	return (ret_val, my_val)
 
 def redpitaya_converters_12_spi_conf(filename, adc_dac_sel_val, conf_addr_val, config_val, conf_en_val):
 	filename = ctypes.create_string_buffer(str.encode(filename))
@@ -131,7 +131,7 @@ def switch_send_conf(filename, input):
 	lib.switch_send_conf(filename, input)
 
 def shifter_set(filename, shift):
-	my_val = ctypes.c_int32(shift)
+	my_val = ctypes.c_int32(int(shift))
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	lib.shifter_set(filename, my_val)
 
