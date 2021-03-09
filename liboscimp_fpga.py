@@ -79,7 +79,7 @@ def nco_counter_set_max_accum(filename, max):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	lib.nco_counter_set_max_accum(filename, max)
 
-(KP, KI, KD, SETPOINT, SIGN, RST_INT) = (range(0, 6))
+(KP, KI, KD) = (range(0, 3))
 def pidv3_axi_set(filename, chan, val):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	my_val = ctypes.c_int32(val)
@@ -95,6 +95,11 @@ def pidv3_axi_set_int_rst(filename, rst):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	my_val = ctypes.c_int8(rst)
 	lib.pidv3_axi_set_int_rst(filename, my_val)
+
+def pidv3_axi_set_setpoint(filename, setp):
+        filename = ctypes.create_string_buffer(str.encode(filename))
+        my_val = ctypes.c_int32(setp)
+        lib.pidv3_axi_set_setpoint(filename, my_val)
 
 def pidv3_axi_set_sign(filename, sign):
 	filename = ctypes.create_string_buffer(str.encode(filename))
