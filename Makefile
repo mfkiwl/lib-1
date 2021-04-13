@@ -44,7 +44,7 @@ clean:
 	rm -f *.c~ *.h~ Makefile~
 
 
-ifeq ($(PYTHON_ENABLED),n)
+ifneq ($(PYTHON_ENABLED),y)
 install: all
 	cp -f $(LIB_NAME).so $(PREFIX)
 install_ssh: all
