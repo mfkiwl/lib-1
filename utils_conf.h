@@ -8,6 +8,9 @@ extern "C" {
 int shifter_set(char *filename, int shift);
 int shifter_get(char *filename, int *shift);
 
+int delayTempo_set(char *filename, int delay);
+int delayTempo_get(char *filename, int *delay);
+
 #ifdef __cplusplus
 }
 #endif

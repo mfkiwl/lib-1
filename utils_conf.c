@@ -48,3 +48,32 @@ int shifter_get(char *filename, int *shift)
 	close(fd_sw);
 	return 0;
 }
+
+#define DELAYTEMPO_VAL_REG (1 << 0)
+
+int delayTempo_set(char *filename, int delay)
+{
+	int fd_sw = open(filename, O_RDWR);
+	if (fd_sw < 0) {
+		printf("erreur d'ouverture de %s\n", filename);
+		return fd_sw;
+	}
+
+	ioctl(fd_sw, FPGAGEN_SET_REGISTER(DELAYTEMPO_VAL_REG), &delay);
+	close(fd_sw);
+	return 0;
+}
+
+int delayTempo_get(char *filename, int *delay)
+{
+	int fd_sw = open(filename, O_RDWR);
+	if (fd_sw < 0) {
+		printf("erreur d'ouverture de %s\n", filename);
+		return fd_sw;
+	}
+
+	ioctl(fd_sw, FPGAGEN_GET_REGISTER(DELAYTEMPO_VAL_REG), &delay);
+	close(fd_sw);
+
+	return 0;
+}
