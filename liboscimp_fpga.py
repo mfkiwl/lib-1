@@ -42,6 +42,12 @@ def edfb_get_conf(filename):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	lib.edfb_get_conf(file)
 
+def fft_send_conf(filename, fileCoeffRe, fileCoeffIm, coeffSize):
+	filename = ctypes.create_string_buffer(str.encode(filename))
+	fileCoeffRe = ctypes.create_string_buffer(str.encode(fileCoeffRe))
+	fileCoeffIm = ctypes.create_string_buffer(str.encode(fileCoeffIm))
+	lib.fft_send_conf(filename, fileCoeffRe, fileCoeffIm, coeffSize)
+
 def fir_send_conf(filename, fileCoeff, coeffSize):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	fileCoeff = ctypes.create_string_buffer(str.encode(fileCoeff))
@@ -146,6 +152,11 @@ def shifter_get(filename):
 	ret_val = lib.shifter_get(filename, my_val)
 	return (ret_val, my_val.value)
 
+def window_send_conf(filename, fileCoeff, coeffSize):
+        filename = ctypes.create_string_buffer(str.encode(filename))
+        fileCoeff = ctypes.create_string_buffer(str.encode(fileCoeff))
+        lib.fft_send_conf(filename, fileCoeff, coeffSize)
+
 (CH1, CH2) = (0x01, 0x02)
 #(S1, S2) = (0x00, 0x01)
 def RP_12_setAC_DC(port_name, mode_num):
@@ -166,7 +177,7 @@ def RP_12_setGainOut(port_name, mode_num):
 	# RP_MAX7311_OUT2 RP_MAX7311_OUT1 port 0x01 0x02
 	# mode RP_GAIN_2V 0x00 or RP_GAIN_10V 0x01
 	mode = ctypes.c_int8(mode_num)
-	port = port_name 
+	port = port_name
 	lib.rp_setGainOut(port,mode)
 
 def RP_12_initController():
