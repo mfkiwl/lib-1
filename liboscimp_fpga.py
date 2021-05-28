@@ -152,11 +152,6 @@ def shifter_get(filename):
 	ret_val = lib.shifter_get(filename, my_val)
 	return (ret_val, my_val.value)
 
-def window_send_conf(filename, fileCoeff, coeffSize):
-        filename = ctypes.create_string_buffer(str.encode(filename))
-        fileCoeff = ctypes.create_string_buffer(str.encode(fileCoeff))
-        lib.fft_send_conf(filename, fileCoeff, coeffSize)
-
 (CH1, CH2) = (0x01, 0x02)
 #(S1, S2) = (0x00, 0x01)
 def RP_12_setAC_DC(port_name, mode_num):
