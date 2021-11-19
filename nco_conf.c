@@ -32,8 +32,8 @@ int nco_counter_send_conf(const char *filename,
 	long double incrf = ((long double)freqHz_out)/step;
 	//unsigned int incr = (unsigned int)incrf;
 	uint64_t incr = (uint64_t)round(incrf);
-	printf("step %Lf incr %lld freqHz_out %lf incrf %Lf\n", step, incr, freqHz_out,
-		incrf);
+	printf("step %Lf incr %lld freqHz_out %lf incrf %Lf %d %d\n", step, incr, freqHz_out,
+		incrf, pinc_sw, poff_sw);
 	long double real_freq = freqHz_ref/(powl(2,accum_size)/(long double)incr);
 	printf("%Lf\n", real_freq);
 
@@ -56,6 +56,61 @@ int nco_counter_send_conf(const char *filename,
 	ioctl(nco, NCO_COUNTER_SET(REG_POFF), &offset_reg);
 	ioctl(nco, NCO_COUNTER_GET(REG_PINC), &incr);
 	printf("incr : %Ld\n", incr);
+	close(nco);
+	return 0;
+}
+
+int nco_counter_set_pinc_poff_sw(const char *filename,
+		const char pinc_sw, const char poff_sw)
+{
+	uint64_t ctrl_reg = ((pinc_sw) ? CTRL_PINC_SW : 0) |
+						((poff_sw) ? CTRL_POFF_SW : 0);
+	int nco = open(filename, O_RDWR);
+	if (nco < 0) {
+		printf("erreur d'ouverture de %s\n", filename);
+		return nco;
+	}
+	ioctl(nco, NCO_COUNTER_SET(REG_CTRL), &ctrl_reg);
+	close(nco);
+	return 0;
+}
+
+int nco_counter_set_pinc_sw(const char *filename, const char pinc_sw)
+{
+	uint64_t ctrl_reg;
+	int nco = open(filename, O_RDWR);
+	if (nco < 0) {
+		printf("erreur d'ouverture de %s\n", filename);
+		return nco;
+	}
+
+	ioctl(nco, NCO_COUNTER_GET(REG_CTRL), &ctrl_reg);
+	if (pinc_sw)
+		ctrl_reg |= CTRL_PINC_SW;
+	else
+		ctrl_reg &= ~CTRL_PINC_SW;
+
+	ioctl(nco, NCO_COUNTER_SET(REG_CTRL), &ctrl_reg);
+	close(nco);
+	return 0;
+}
+
+int nco_counter_get_poff_sw(const char *filename, const char poff_sw)
+{
+	uint64_t ctrl_reg;
+	int nco = open(filename, O_RDWR);
+	if (nco < 0) {
+		printf("erreur d'ouverture de %s\n", filename);
+		return nco;
+	}
+
+	ioctl(nco, NCO_COUNTER_GET(REG_CTRL), &ctrl_reg);
+	if (poff_sw)
+		ctrl_reg |= CTRL_POFF_SW;
+	else
+		ctrl_reg &= ~CTRL_POFF_SW;
+
+	ioctl(nco, NCO_COUNTER_SET(REG_CTRL), &ctrl_reg);
 	close(nco);
 	return 0;
 }
