@@ -8,9 +8,10 @@ extern "C" {
 // I2C Address of device
 // MCP4706, MCP4716 & MCP4726 are factory programed for any of 0x60 thru 0x67
 //  commonly 0x60
-#define MAX7311_DEFAULT_ADDRESS	0x20
-#define DEFAULT_DEV_PATH     "/dev/i2c-0"
-#define SI571_ADDRESS 0x55
+#define MAX7311_DEFAULT_ADDRESS_1_1	0x20
+#define MAX7311_DEFAULT_ADDRESS_1_2	0x21
+#define DEFAULT_DEV_PATH	"/dev/i2c-0"
+#define SI571_ADDRESS	0x55
 
 //struct max7311{
 
@@ -78,7 +79,7 @@ extern "C" {
 #define RP_GAIN_10V 0x01
 
 /* If an error occurs then the value will be -1*/
-    
+
     int  rp_initController();
 
     /* Sets the AC / DC modes for input.
