@@ -5,9 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define _STRINGIFY(s) #s
-#define STRINGIFY(s) _STRINGIFY(s)
-
 unsigned long g_sleep_time = 50 * 1000;
 
 char g_I2C_address = 0;
