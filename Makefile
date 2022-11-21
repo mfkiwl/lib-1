@@ -48,14 +48,14 @@ ifneq ($(PYTHON_ENABLED),y)
 install: all
 	cp -f $(LIB_NAME).so $(PREFIX)
 install_ssh: all
-	scp $(LIB_NAME).so root@$(IP):/usr/lib
+	scp -O  $(LIB_NAME).so root@$(IP):/usr/lib
 else
 install: all
 	cp -f $(LIB_NAME).so $(PREFIX)
 	cp -f $(LIB_NAME).py $(PREFIX)/python$(PYTHON_VERS)/site-packages
 install_ssh: all
-	scp $(LIB_NAME).so root@$(IP):/usr/lib
-	scp $(LIB_NAME).py root@$(IP):/usr/lib/python$(PYTHON_VERS)/site-packages
+	scp -O  $(LIB_NAME).so root@$(IP):/usr/lib
+	scp -O  $(LIB_NAME).py root@$(IP):/usr/lib/python$(PYTHON_VERS)/site-packages
 endif
 
 uninstall: clean
