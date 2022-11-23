@@ -11,11 +11,11 @@ int nco_counter_send_conf(const char *filename,
 		const char pinc_sw, const char poff_sw);
 /* select between pinc and poff input or axi */
 int nco_counter_set_pinc_poff_sw(const char *filename,
-		const char pinc_sw, const char poff_sw)
+		const char pinc_sw, const char poff_sw);
 /* select between pinc input or axi */
-int nco_counter_get_pinc_sw(const char *filename, const char poff_sw)
+int nco_counter_get_pinc_sw(const char *filename, const char poff_sw);
 /* select between poff input or axi */
-int nco_counter_get_poff_sw(const char *filename, const char poff_sw)
+int nco_counter_get_poff_sw(const char *filename, const char poff_sw);
 int nco_counter_set_max_accum(const char *filename, const uint64_t max);
 
 #ifdef __cplusplus
