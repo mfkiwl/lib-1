@@ -34,6 +34,17 @@ def axi_to_dac_conf_sync(filename, sync_chan):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	lib.axi_to_dac_conf_sync(filename, sync_chan)
 
+def delayTempo_set(filename, delay):
+        my_val = ctypes.c_int32(int(delay))
+        filename = ctypes.create_string_buffer(str.encode(filename))
+        lib.delayTempo_set(filename, my_val)
+
+def delayTempo_get(filename):
+        filename = ctypes.create_string_buffer(str.encode(filename))
+        my_val = ctypes.c_int32()
+        ret_val = lib.shifter_get(filename, my_val)
+        return (ret_val, my_val.value)
+
 def edfb_send_conf(filename, position):
 	filename = ctypes.create_string_buffer(str.encode(filename))
 	lib.edfb_send_conf(filename, position)
